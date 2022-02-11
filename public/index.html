@@ -25,6 +25,8 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script src="js/neutralino.js"></script>
+    <script src="js/main.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -39,5 +41,14 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+      <!-- Neutralino.js client. This file is gitignored, 
+        because `neu update` typically downloads it.
+        Avoid copy-pasting it. 
+        -->
+        <div>
+          <a href="#" onClick="openDocs();">Docs</a> &middot;  
+          <a href="#" onClick="openTutorial();">Tutorial</a>
+        </div>
+
   </body>
 </html>

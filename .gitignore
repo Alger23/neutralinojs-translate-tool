@@ -1,5 +1,4 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
+### Reactjs .gitignore ###
 # dependencies
 /node_modules
 /.pnp
@@ -21,3 +20,20 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+### Neutralinojs .gitignore ###
+# Developer tools' files
+.lite_workspace.lua
+
+# Neutralinojs binaries and builds
+/bin
+/dist
+
+# Neutralinojs client (minified)
+neutralino.js
+
+# Neutralinojs related files
+.storage
+*.log
+
+/resources
