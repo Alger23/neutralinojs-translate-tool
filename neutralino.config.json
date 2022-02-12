@@ -43,7 +43,11 @@
       "maximize": false,
       "hidden": false,
       "resizable": true,
-      "exitProcessOnClose": false
+      "exitProcessOnClose": false,
+      "nativeAllowList": [
+        "filesystem.writeFile",
+        "os.execCommand"
+      ]
     },
     "browser": {
       "globalVariables": {

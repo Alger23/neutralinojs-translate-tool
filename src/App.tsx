@@ -1,28 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const translateApiPath = NL_PATH + "/google-translate-api/translate.js";
+const translateDataPath = NL_PATH + "/google-translate-api/translate-data.json";
+
 function App() {
+  const [text, setText] = useState('hello');
+  const [translated, setTranslated] = useState<any>();
+  const translate = async () => {
+    var data = {
+      "text": text,
+      "from": "en",
+      "to": ["zh-TW"]
+    };
+    await Neutralino.filesystem.writeFile(translateDataPath, JSON.stringify(data));
+    let commandOut = await Neutralino.os.execCommand('node ' + translateApiPath);
+    setTranslated(JSON.parse(commandOut.stdOut));
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo"/>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <div>
-        <a href="#" onClick={() => {
-          Neutralino.os.open("https://neutralino.js.org/docs");
-        }}>Docs</a> &middot;
+      <div className="Translate">
+        <input type="text" value={text} onChange={e => setText(e.target.value)}/>
+        <br/>
+        <button onClick={translate}>Translate</button>
+        <br/>
+        <pre>
+          {JSON.stringify(translated, null, 2)}
+        </pre>
       </div>
     </div>
   );
