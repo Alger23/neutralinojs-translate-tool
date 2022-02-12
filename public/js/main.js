@@ -59,4 +59,4 @@ if(NL_OS != "Darwin") { // TODO: Fix https://github.com/neutralinojs/neutralinoj
     setTray();
 }
 
-showInfo();
+//showInfo();
