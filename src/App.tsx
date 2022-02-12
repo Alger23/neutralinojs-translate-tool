@@ -15,7 +15,7 @@ function App() {
       "to": ["zh-TW"]
     };
     await Neutralino.filesystem.writeFile(translateDataPath, JSON.stringify(data));
-    let commandOut = await Neutralino.os.execCommand('node ' + translateApiPath);
+    let commandOut = await Neutralino.os.execCommand(NL_NODE_NAME + ' ' + translateApiPath);
     setTranslated(JSON.parse(commandOut.stdOut));
   };
   return (

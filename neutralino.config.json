@@ -14,19 +14,11 @@
   },
   "nativeAllowList": [
     "app.*",
-    "os.*"
+    "os.*",
+    "filesystem.writeFile"
   ],
   "globalVariables": {
-    "TEST1": "Hello",
-    "TEST2": [
-      2,
-      4,
-      5
-    ],
-    "TEST3": {
-      "value1": 10,
-      "value2": {}
-    }
+    "NODE_NAME": "node"
   },
   "modes": {
     "window": {
@@ -43,11 +35,7 @@
       "maximize": false,
       "hidden": false,
       "resizable": true,
-      "exitProcessOnClose": false,
-      "nativeAllowList": [
-        "filesystem.writeFile",
-        "os.execCommand"
-      ]
+      "exitProcessOnClose": false
     },
     "browser": {
       "globalVariables": {
