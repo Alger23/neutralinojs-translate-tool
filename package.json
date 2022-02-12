@@ -21,7 +21,8 @@
     "react-build": "react-scripts build",
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
-    "start": "concurrently \"react-start\" \"neu run\"",
+    "watch": "node scripts/watch.js",
+    "start": "concurrently \"yarn watch\" \"neu run\"",
     "build": "yarn react-build && neu build"
   },
   "eslintConfig": {
@@ -43,6 +44,6 @@
     ]
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "concurrently": "^7.0.0"
   }
 }
