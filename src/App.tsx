@@ -11,6 +11,7 @@ import {
   TableContainer, TableRow,
   TextField
 } from "@mui/material";
+import CopySpan from "./components/CopySpan";
 
 const translateApiPath = NL_PATH + "/google-translate-api/translate.js";
 const translateDataPath = NL_PATH + "/google-translate-api/translate-data.json";
@@ -109,7 +110,8 @@ function App() {
                   {lang}
                 </TableCell>
                 <TableCell>
-                  {translated[lang].text}
+                  {<CopySpan value={translated[lang].text}/>}
+                  {<CopySpan value={translated[lang].pronunciation}/>}
                 </TableCell>
               </TableRow>
             ))}
