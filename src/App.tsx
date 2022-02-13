@@ -12,7 +12,7 @@ import {
   TextField, ThemeProvider
 } from "@mui/material";
 import CopySpan from "./components/CopySpan";
-import {green, purple} from "@mui/material/colors";
+import {blue} from "@mui/material/colors";
 
 
 const translateApiPath = NL_PATH + "/google-translate-api/translate.js";
@@ -21,10 +21,7 @@ const translateDataPath = NL_PATH + "/google-translate-api/translate-data.json";
 const theme = createTheme({
   palette: {
     primary: {
-      main: purple[500],
-    },
-    secondary: {
-      main: green[500],
+      main: blue[500],
     },
   },
 });
@@ -119,13 +116,13 @@ function App() {
 
 
             <ButtonGroup fullWidth variant="contained" aria-label="outlined primary button group"
-            sx={{mt:1}}>
+                         sx={{mt: 1}}>
               <Button onClick={translate}>Translate</Button>
               <Button onClick={openBrowser}>Browser</Button>
             </ButtonGroup>
 
 
-            <TableContainer component={Paper} sx={{mt:1}}>
+            <TableContainer component={Paper} sx={{mt: 1}}>
               <Table>
                 <TableBody>
                   {translated && Object.keys(translated).map((lang, i) => (
