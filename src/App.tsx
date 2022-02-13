@@ -2,24 +2,37 @@ import React, {ReactNode, useState} from 'react';
 import './App.css';
 import {
   Box,
-  Button, ButtonGroup,
+  Button, ButtonGroup, Container, createTheme, CssBaseline,
   FormControl,
   InputLabel,
   MenuItem, Paper, Select, SelectChangeEvent,
   Table,
   TableBody, TableCell,
   TableContainer, TableRow,
-  TextField
+  TextField, ThemeProvider
 } from "@mui/material";
 import CopySpan from "./components/CopySpan";
+import {green, purple} from "@mui/material/colors";
+
 
 const translateApiPath = NL_PATH + "/google-translate-api/translate.js";
 const translateDataPath = NL_PATH + "/google-translate-api/translate-data.json";
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: purple[500],
+    },
+    secondary: {
+      main: green[500],
+    },
+  },
+});
+
 function App() {
   const [from, setFrom] = useState<string>("auto");
   const [toLangs, setToLangs] = useState<string[]>(['ja', 'en']);
-  const [rawText, setRawText] = useState<string>('hello');
+  const [rawText, setRawText] = useState<string>('');
   const [translated, setTranslated] = useState<any>();
 
   const fromHandleChange = (e: SelectChangeEvent<string>, child: ReactNode) => {
@@ -46,85 +59,99 @@ function App() {
   };
 
   return (
-    <Box className="App"
-         component="form"
-         sx={{
-           '& > :not(style)': {m: 1},
-         }}
-         noValidate
-         autoComplete="off">
+    <ThemeProvider theme={theme}>
+      <CssBaseline/>
+      <main>
+        <Box className="App"
+             component="form"
+             sx={{
+               pt: 2,
+               pb: 2,
+             }}
+             noValidate
+             autoComplete="off">
+          <Container>
+            <FormControl fullWidth>
+              <InputLabel id="from-label">From</InputLabel>
+              <Select
+                labelId="from-label"
+                id="from"
+                value={from}
+                label="From"
+                onChange={fromHandleChange}
+                size="small"
+              >
+                <MenuItem value="auto">Auto Detect</MenuItem>
+                <MenuItem value="zh-TW">zh-TW</MenuItem>
+                <MenuItem value="ja">ja</MenuItem>
+                <MenuItem value="en">en</MenuItem>
+              </Select>
+            </FormControl>
 
-      <FormControl fullWidth>
-        <InputLabel id="from-label">From</InputLabel>
-        <Select
-          labelId="from-label"
-          id="from"
-          value={from}
-          label="From"
-          onChange={fromHandleChange}
-          size="small"
-        >
-          <MenuItem value="auto">Auto Detect</MenuItem>
-          <MenuItem value="zh-TW">zh-TW</MenuItem>
-          <MenuItem value="ja">ja</MenuItem>
-          <MenuItem value="en">en</MenuItem>
-        </Select>
-      </FormControl>
+            <TextField
+              select
+              name="toLangs"
+              id="toLangs"
+              label="To"
+              SelectProps={{
+                multiple: true,
+                value: toLangs,
+                onChange: toLangsHandleChange
+              }}
+              fullWidth
+              size="small"
+              sx={{mt: 1}}
+            >
+              <MenuItem value="en">en</MenuItem>
+              <MenuItem value="ja">ja</MenuItem>
+              <MenuItem value="th">th</MenuItem>
+              <MenuItem value="zh-CN">zh-CN</MenuItem>
+              <MenuItem value="zh-TW">zh-TW</MenuItem>
+            </TextField>
 
-      <TextField name="text" placeholder="multi-line" multiline fullWidth
-                 value={rawText}
-                 onChange={(e) => setRawText(e.target.value)}
-                 sx={{mb: '0!important'}}/>
+            <TextField name="text" placeholder="input text" multiline fullWidth
+                       value={rawText}
+                       onChange={(e) => setRawText(e.target.value)}
+                       sx={{
+                         mt: 1,
+                         mb: '0!important'
+                       }}/>
 
-      <ButtonGroup fullWidth sx={{mt: '0!important'}}>
-        <Button onClick={translate}>Translate</Button>
-        <Button onClick={openBrowser}>Browser</Button>
-      </ButtonGroup>
 
-      <TextField
-        select
-        name="toLangs"
-        id="toLangs"
-        label="To"
-        SelectProps={{
-          multiple: true,
-          value: toLangs,
-          onChange: toLangsHandleChange
-        }}
-        fullWidth
-        size="small"
-      >
-        <MenuItem value="en">en</MenuItem>
-        <MenuItem value="ja">ja</MenuItem>
-        <MenuItem value="th">th</MenuItem>
-        <MenuItem value="zh-CN">zh-CN</MenuItem>
-        <MenuItem value="zh-TW">zh-TW</MenuItem>
-      </TextField>
+            <ButtonGroup fullWidth variant="contained" aria-label="outlined primary button group"
+            sx={{mt:1}}>
+              <Button onClick={translate}>Translate</Button>
+              <Button onClick={openBrowser}>Browser</Button>
+            </ButtonGroup>
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableBody>
-            {translated && Object.keys(translated).map((lang, i) => (
-              <TableRow key={i}>
-                <TableCell component="th" scope="row" width={30}>
-                  {lang}
-                </TableCell>
-                <TableCell>
-                  {<CopySpan value={translated[lang].text}/>}
-                  {<CopySpan value={translated[lang].pronunciation}/>}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
 
-      <div className="Translate">
-        <pre>
-          {JSON.stringify(translated, null, 2)}
-        </pre>
-      </div>
-    </Box>
+            <TableContainer component={Paper} sx={{mt:1}}>
+              <Table>
+                <TableBody>
+                  {translated && Object.keys(translated).map((lang, i) => (
+                    <TableRow key={i}>
+                      <TableCell component="th" scope="row" width={30}>
+                        {lang}
+                      </TableCell>
+                      <TableCell>
+                        {<CopySpan value={translated[lang].text}/>}
+                        {<CopySpan value={translated[lang].pronunciation}/>}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+
+            {/*<div className="Translate">*/}
+            {/*  <pre>{JSON.stringify(translated, null, 2)}</pre>*/}
+            {/*</div>*/}
+
+          </Container>
+        </Box>
+      </main>
+
+    </ThemeProvider>
   );
 }
 
